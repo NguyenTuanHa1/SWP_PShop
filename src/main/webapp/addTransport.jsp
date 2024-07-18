@@ -1,16 +1,11 @@
 <%@ page isELIgnored="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bill List</title>
+    <title>Add Transport</title>
     <link rel="icon" href="assets/img/heading-img.png">
     <!-- CSS only -->
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
@@ -41,17 +36,15 @@
     </div>
 </div>
 <!-- loader end -->
-<!-- header -->
 <%@include file="header.jsp" %>
-<!-- header end -->
 
 <section class="hero-section" style="background-color: #fff8e5; background-image:url(assets/img/background.png)">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="hero-text">
-                    <h1>User Bills</h1>
-                    <h3>List of all bills placed by the user.</h3>
+                    <h1>Add New Transport</h1>
+                    <h3>Fill in the details below to add a new transport method.</h3>
                 </div>
             </div>
         </div>
@@ -63,52 +56,32 @@
 
 <section class="gap">
     <div class="container">
-        <h2>Shippers</h2>
-        <c:if test="${not empty errorMessage}">
-            <div class="alert alert-danger mt-3">${errorMessage}</div>
-        </c:if>
-        <c:if test="${not empty successMessage}">
-            <div class="alert alert-success mt-3">${successMessage}</div>
-        </c:if>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tên shipper</th>
-                <th>Email</th>
-                <th>Số điện thoại</th>
-                <th>Địa chỉ</th>
-                <th>Mô tả</th>
-                <th>Trạng thái</th>
-                <th>Ngày đăng ký</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${listShippers}" var="shipper">
-                <tr>
-                    <td>${shipper.shipperID}</td>
-                    <td>${shipper.shipper.name}</td>
-                    <td>${shipper.shipper.email}</td>
-                    <td>${shipper.shipper.phoneNumber}</td>
-                    <td>${shipper.shipper.address}</td>
-                    <td>${shipper.description}</td>
-                    <td>${shipper.status}</td>
-                    <td>${shipper.createdDate}</td>
-                    <td>
-                        <c:choose>
-                            <c:when test="${shipper.status}">
-                                <a href="/rejectShipper?shipperID=${shipper.shipperID}" class="btn btn-danger">Vô hiệu</a>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="/acceptShipper?shipperID=${shipper.shipperID}" class="btn btn-success">Chấp nhận</a>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+        <form action="/addTransport" method="post">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2>Transport Details</h2>
+                    <c:if test="${not empty errorMessage}">
+                        <div class="alert alert-danger mt-3">${errorMessage}</div>
+                    </c:if>
+                    <c:if test="${not empty successMessage}">
+                        <div class="alert alert-success mt-3">${successMessage}</div>
+                    </c:if>
+                    <div class="form-group">
+                        <label for="transportName">Transport Name</label>
+                        <input type="text" id="transportName" name="transportName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="priceTransPort">Transport Price</label>
+                        <input type="number" id="priceTransPort" name="priceTransPort" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="descriptionTransport">Transport Description</label>
+                        <textarea id="descriptionTransport" name="descriptionTransport" class="form-control"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Transport</button>
+                </div>
+            </div>
+        </form>
     </div>
 </section>
 
